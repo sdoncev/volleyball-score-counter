@@ -1,0 +1,164 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to right, rgb(4, 4, 83), rgb(87, 7, 47));
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.toolbar {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: rgb(3, 3, 54);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.point-sequence {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 3px;
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 28px;
+  text-align: center;
+  border-radius: 14px;
+  background-color: rgba(0, 0, 0, 0.38);
+  padding: 0px 4px;
+}
+
+.red-point-icon {
+  background-color: red;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.blue-point-icon {
+  background-color: blue;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.left-toolbar-section {
+  padding-left: 12px;
+  display: flex;
+  align-items: center;
+  column-gap: 3px;
+}
+
+.score-btn-container {
+  height: 35%;
+  width: 80%;
+  display: flex;
+  column-gap: 5px;
+}
+
+.score-btn {
+  flex: 1;
+  min-height: 150px;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  font-weight: bold;
+  color: white;
+  font-size: 42px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.13);
+}
+
+.blue-team-btn {
+  border-color: rgb(85, 85, 180);
+}
+
+.red-team-btn {
+  border-color: rgb(150, 73, 73);
+}
+
+.history-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid white;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.history-btn-icon path {
+  fill: white;
+}
+
+.game-options-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 100%;
+}
+
+.progress-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  width: 80%;
+  column-gap: 5px;
+  padding-bottom: 5px;
+}
+
+.target-score-input {
+  text-align: center;
+  font-size: 24px;
+  line-height: 24px;
+  width: 48px;
+  height: 32px;
+  padding-top: 4px;
+  border: 1px solid white;
+  background-color: transparent;
+  border-radius: 3px;
+  color: white;
+}
+
+.blue-team-progress-bar, 
+.red-team-progress-bar {
+  flex: 1;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+.blue-team-progress-bar .progress-bar-fill {
+  justify-self: start;
+  background-color: blue;
+  width: 0%;
+  height: 16px;
+}
+
+.red-team-progress-bar .progress-bar-fill {
+  justify-self: end;
+  background-color: red;
+  width: 0%;
+  height: 16px;
+}
+
+.progress-bar-fill {
+  border-radius: 8px;
+}
