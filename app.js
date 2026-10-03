@@ -1,4 +1,5 @@
 const pointSequence = [];
+const undone = [];
 
 const blueTeamButton = document.querySelector('.blue-team-btn');
 const redTeamButton = document.querySelector('.red-team-btn');
@@ -35,6 +36,44 @@ resetScoreBtn.addEventListener('click', () => {
   renderPointSequence();
 });
 
+document.querySelector('.undo-button').addEventListener('click', () => {
+  if (pointSequence.length) {
+    const previousPoint = pointSequence.pop();
+    undone.push(previousPoint);
+    const newScore = aggregatePoints(previousPoint);
+    renderPointSequence();
+
+    if (previousPoint === 'b') {
+      blueTeamButton.innerHTML = newScore;
+      renderTeamProgressBar(blueProgressBar, newScore);
+    } else {
+      redTeamButton.innerHTML = newScore;
+      renderTeamProgressBar(redProgressBar, newScore);
+    }
+  } else {
+    console.log('No points to undo.')
+  }
+});
+
+document.querySelector('.redo-button').addEventListener('click', () => {
+  if (undone.length) {
+    const redo = undone.pop();
+    pointSequence.push(redo);
+    const newScore = aggregatePoints(redo);
+    renderPointSequence();
+
+    if (redo === 'b') {
+      blueTeamButton.innerHTML = newScore;
+      renderTeamProgressBar(blueProgressBar, newScore);
+    } else {
+      redTeamButton.innerHTML = newScore;
+      renderTeamProgressBar(redProgressBar, newScore);
+    }
+  } else {
+    console.log('No points to redo.')
+  }
+});
+
 function getTeamPointsProgress(points) {
   return Math.round(points / targetScore * 100);
 }
@@ -51,4 +90,8 @@ function renderPointSequence() {
     pointIcon.classList.add(point === 'b' ? 'blue-point-icon' : 'red-point-icon');
     document.querySelector('.point-sequence').appendChild(pointIcon);
   })
+}
+
+function aggregatePoints(team) {
+  return pointSequence.filter(point => point === team).length;
 }
