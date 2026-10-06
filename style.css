@@ -110,10 +110,28 @@ body {
 
 .game-options-bar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 48px;
-  width: 100%;
+  width: 80%;
+}
+
+.icon-section.blue {
+  flex: 1;
+  text-align: start;
+}
+
+.icon-section.red {
+  flex: 1;
+  text-align: end;
+}
+
+.serve-icon {
+  display: none;
+}
+
+.serve-icon.serving {
+  display: inline;
 }
 
 .progress-bar-container {

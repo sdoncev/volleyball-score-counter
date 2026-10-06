@@ -12,17 +12,19 @@ const redProgressBar = document.querySelector('.red-team-progress-bar .progress-
 let targetScore = Number(document.querySelector('.target-score-input').value);
 
 blueTeamButton.addEventListener('click', (e) => {
+  pointSequence.push('blue');
   const newScore = Number(e.target.innerHTML) + 1;
   e.target.innerHTML = newScore;
-  pointSequence.push('b');
+  renderServeIcon();
   renderTeamProgressBar(blueProgressBar, newScore);
   renderPointSequence();
 });
 
 redTeamButton.addEventListener('click', (e) => {
+  pointSequence.push('red');
   const newScore = Number(e.target.innerHTML) + 1;
   e.target.innerHTML = newScore;
-  pointSequence.push('r');
+  renderServeIcon();
   renderTeamProgressBar(redProgressBar, newScore);
   renderPointSequence();
 });
@@ -34,6 +36,7 @@ resetScoreBtn.addEventListener('click', () => {
   renderTeamProgressBar(blueProgressBar, 0);
   renderTeamProgressBar(redProgressBar, 0);
   renderPointSequence();
+  renderServeIcon();
 });
 
 document.querySelector('.undo-button').addEventListener('click', () => {
@@ -42,8 +45,9 @@ document.querySelector('.undo-button').addEventListener('click', () => {
     undone.push(previousPoint);
     const newScore = aggregatePoints(previousPoint);
     renderPointSequence();
+    renderServeIcon();
 
-    if (previousPoint === 'b') {
+    if (previousPoint === 'blue') {
       blueTeamButton.innerHTML = newScore;
       renderTeamProgressBar(blueProgressBar, newScore);
     } else {
@@ -61,8 +65,9 @@ document.querySelector('.redo-button').addEventListener('click', () => {
     pointSequence.push(redo);
     const newScore = aggregatePoints(redo);
     renderPointSequence();
+    renderServeIcon();
 
-    if (redo === 'b') {
+    if (redo === 'blue') {
       blueTeamButton.innerHTML = newScore;
       renderTeamProgressBar(blueProgressBar, newScore);
     } else {
@@ -87,9 +92,20 @@ function renderPointSequence() {
 
   pointSequence.forEach((point) => {
     const pointIcon = document.createElement('div');
-    pointIcon.classList.add(point === 'b' ? 'blue-point-icon' : 'red-point-icon');
+    pointIcon.classList.add(point === 'blue' ? 'blue-point-icon' : 'red-point-icon');
     document.querySelector('.point-sequence').appendChild(pointIcon);
-  })
+  });
+}
+
+function renderServeIcon() {
+  document.querySelectorAll('.serve-icon').forEach(icon => {
+    icon.classList.remove('serving');
+  });
+  const scoringTeam = pointSequence.slice(-1)[0];
+
+  if (scoringTeam) {
+    document.querySelector(`.icon-section.${scoringTeam} .serve-icon`).classList.add('serving');
+  }
 }
 
 function aggregatePoints(team) {
