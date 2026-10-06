@@ -101,13 +101,13 @@ function renderServeIcon() {
   document.querySelectorAll('.serve-icon').forEach(icon => {
     icon.classList.remove('serving');
   });
-  const scoringTeam = pointSequence.slice(-1)[0];
+  const scoringTeam = pointSequence.at(-1);
 
   if (scoringTeam) {
     document.querySelector(`.icon-section.${scoringTeam} .serve-icon`).classList.add('serving');
   }
 }
 
-function aggregatePoints(team) {
-  return pointSequence.filter(point => point === team).length;
+function aggregatePoints(teamColor) {
+  return pointSequence.filter(point => point === teamColor).length;
 }
