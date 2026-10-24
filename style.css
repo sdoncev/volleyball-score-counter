@@ -179,4 +179,5 @@ body {
 
 .progress-bar-fill {
   border-radius: 8px;
+  transition: width 0.4s ease-in-out;
 }
