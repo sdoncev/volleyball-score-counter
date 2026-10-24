@@ -79,6 +79,11 @@ document.querySelector('.redo-button').addEventListener('click', () => {
   }
 });
 
+document.querySelector('.target-score-input').addEventListener('change', (e) => {
+  targetScore = Number(e.target.value);
+  console.log(targetScore);
+});
+
 function getTeamPointsProgress(points) {
   return Math.round(points / targetScore * 100);
 }
