@@ -18,6 +18,7 @@ blueTeamButton.addEventListener('click', (e) => {
   renderServeIcon();
   renderTeamProgressBar(blueProgressBar, newScore);
   renderPointSequence();
+  isWin(e.target.dataset.id);
 });
 
 redTeamButton.addEventListener('click', (e) => {
@@ -27,12 +28,14 @@ redTeamButton.addEventListener('click', (e) => {
   renderServeIcon();
   renderTeamProgressBar(redProgressBar, newScore);
   renderPointSequence();
+  isWin(e.target.dataset.id);
 });
 
 resetScoreBtn.addEventListener('click', () => {
   blueTeamButton.innerHTML = 0;
   redTeamButton.innerHTML = 0;
   pointSequence.length = 0;     // clear score sequence for new game
+  targetScore = document.querySelector('.target-score-input').value;
   renderTeamProgressBar(blueProgressBar, 0);
   renderTeamProgressBar(redProgressBar, 0);
   renderPointSequence();
@@ -116,3 +119,23 @@ function renderServeIcon() {
 function aggregatePoints(teamId) {
   return pointSequence.filter(id => id == teamId).length;
 }
+
+function getOtherTeamId(teamId) {
+  return teamId % 2 + 1;
+}
+
+function isWin(teamId) {
+  const thisTeamPoints = aggregatePoints(teamId);
+  const otherTeamPoints = aggregatePoints(getOtherTeamId(teamId));
+
+  if (thisTeamPoints == targetScore && thisTeamPoints - otherTeamPoints >= 2) {
+    console.log('Win detected');
+    return true;
+
+  } else if (thisTeamPoints == targetScore) {
+    targetScore++;
+    console.log(targetScore);
+  }
+
+  return false;
+} 
