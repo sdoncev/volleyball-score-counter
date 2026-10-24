@@ -12,7 +12,7 @@ const redProgressBar = document.querySelector('.red-team-progress-bar .progress-
 let targetScore = Number(document.querySelector('.target-score-input').value);
 
 blueTeamButton.addEventListener('click', (e) => {
-  pointSequence.push('blue');
+  pointSequence.push(e.target.dataset.id);
   const newScore = Number(e.target.innerHTML) + 1;
   e.target.innerHTML = newScore;
   renderServeIcon();
@@ -21,7 +21,7 @@ blueTeamButton.addEventListener('click', (e) => {
 });
 
 redTeamButton.addEventListener('click', (e) => {
-  pointSequence.push('red');
+  pointSequence.push(e.target.dataset.id);
   const newScore = Number(e.target.innerHTML) + 1;
   e.target.innerHTML = newScore;
   renderServeIcon();
@@ -41,13 +41,13 @@ resetScoreBtn.addEventListener('click', () => {
 
 document.querySelector('.undo-button').addEventListener('click', () => {
   if (pointSequence.length) {
-    const previousPoint = pointSequence.pop();
-    undone.push(previousPoint);
-    const newScore = aggregatePoints(previousPoint);
+    const teamId = pointSequence.pop();
+    undone.push(teamId);
+    const newScore = aggregatePoints(teamId);
     renderPointSequence();
     renderServeIcon();
 
-    if (previousPoint === 'blue') {
+    if (teamId == 1) {
       blueTeamButton.innerHTML = newScore;
       renderTeamProgressBar(blueProgressBar, newScore);
     } else {
@@ -61,13 +61,13 @@ document.querySelector('.undo-button').addEventListener('click', () => {
 
 document.querySelector('.redo-button').addEventListener('click', () => {
   if (undone.length) {
-    const redo = undone.pop();
-    pointSequence.push(redo);
-    const newScore = aggregatePoints(redo);
+    const teamId = undone.pop();
+    pointSequence.push(teamId);
+    const newScore = aggregatePoints(teamId);
     renderPointSequence();
     renderServeIcon();
 
-    if (redo === 'blue') {
+    if (teamId == 1) {
       blueTeamButton.innerHTML = newScore;
       renderTeamProgressBar(blueProgressBar, newScore);
     } else {
@@ -95,9 +95,9 @@ function renderTeamProgressBar(progressBarElem, points) {
 function renderPointSequence() {
   document.querySelector('.point-sequence').innerHTML = '';
 
-  pointSequence.forEach((point) => {
+  pointSequence.forEach((teamId) => {
     const pointIcon = document.createElement('div');
-    pointIcon.classList.add(point === 'blue' ? 'blue-point-icon' : 'red-point-icon');
+    pointIcon.classList.add(teamId == 1 ? 'blue-point-icon' : 'red-point-icon');
     document.querySelector('.point-sequence').appendChild(pointIcon);
   });
 }
@@ -106,13 +106,13 @@ function renderServeIcon() {
   document.querySelectorAll('.serve-icon').forEach(icon => {
     icon.classList.remove('serving');
   });
-  const scoringTeam = pointSequence.at(-1);
+  const scoringTeamId = pointSequence.at(-1);
 
-  if (scoringTeam) {
-    document.querySelector(`.icon-section.${scoringTeam} .serve-icon`).classList.add('serving');
+  if (scoringTeamId) {
+    document.querySelector(`[data-id="${scoringTeamId}"].icon-section .serve-icon`).classList.add('serving');
   }
 }
 
-function aggregatePoints(teamColor) {
-  return pointSequence.filter(point => point === teamColor).length;
+function aggregatePoints(teamId) {
+  return pointSequence.filter(id => id == teamId).length;
 }
