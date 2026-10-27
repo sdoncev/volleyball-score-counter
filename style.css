@@ -66,6 +66,21 @@ body {
   column-gap: 3px;
 }
 
+.team-controls-container {
+  display: flex;
+  justify-content: center;
+  height: 40%;
+  width: 100%;
+  column-gap: 16px;
+}
+
+.team-controls {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
 .score-btn-container {
   height: 35%;
   width: 80%;
@@ -74,8 +89,7 @@ body {
 }
 
 .score-btn {
-  flex: 1;
-  min-height: 150px;
+  flex: 1;  
   border-radius: 8px;
   border-width: 2px;
   border-style: solid;
@@ -105,6 +119,7 @@ body {
 }
 
 .history-btn-icon path {
+  height: 100%;
   fill: white;
 }
 
@@ -116,13 +131,13 @@ body {
   width: 80%;
 }
 
-.icon-section.blue {
-  flex: 1;
+[data-id='1'].icon-section {
+  height: 32px;
   text-align: start;
 }
 
-.icon-section.red {
-  flex: 1;
+[data-id='2'].icon-section {
+  height: 32px;
   text-align: end;
 }
 
@@ -132,15 +147,6 @@ body {
 
 .serve-icon.serving {
   display: inline;
-}
-
-.progress-bar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  width: 80%;
-  column-gap: 5px;
-  padding-bottom: 5px;
 }
 
 .target-score-input {
@@ -156,21 +162,20 @@ body {
   color: white;
 }
 
-.blue-team-progress-bar, 
-.red-team-progress-bar {
-  flex: 1;
+.team-progress-bar {
+  height: 16px;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.38);
 }
 
-.blue-team-progress-bar .progress-bar-fill {
+[data-id="1"].team-controls .progress-bar-fill {
   justify-self: start;
   background-color: blue;
   width: 0%;
   height: 16px;
 }
 
-.red-team-progress-bar .progress-bar-fill {
+[data-id="2"].team-controls .progress-bar-fill {
   justify-self: end;
   background-color: red;
   width: 0%;
