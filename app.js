@@ -12,24 +12,29 @@ let targetScore = Number(document.querySelector('.target-score-input').value);
 
 scoreButtons.forEach(button => {
   button.addEventListener('click', e => {
-    pointSequence.push(e.target.dataset.id);
-    const newScore = Number(e.target.innerHTML) + 1;
+    const teamId = e.target.dataset.id;
+    pointSequence.push(teamId);
+    const newScore = aggregatePoints(teamId);
     e.target.innerHTML = newScore;
     renderServeIcon();
-    renderTeamProgressBar(e.target.dataset.id, newScore);
+    renderTeamProgressBar(teamId, newScore);
     renderPointSequence();
-    isWin(e.target.dataset.id);
+    isWin(teamId);
   });
 });
 
 resetScoreBtn.addEventListener('click', () => {
+  pointSequence.length = 0;   // update the data (model)
+
+  targetScore = document.querySelector('.target-score-input').value;  // reset target score
+
+  // update view to reflect changes in model
   scoreButtons.forEach(button => {
-    button.innerHTML = 0;
+    const newScore = aggregatePoints(button.dataset.id);
+    button.innerHTML = newScore;
+    renderTeamProgressBar(button.dataset.id, newScore);
   });
-  pointSequence.length = 0;     // clear score sequence for new game
-  targetScore = document.querySelector('.target-score-input').value;
-  renderTeamProgressBar(1, 0);
-  renderTeamProgressBar(2, 0);
+  
   renderPointSequence();
   renderServeIcon();
 });
