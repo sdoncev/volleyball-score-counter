@@ -1,34 +1,25 @@
 const pointSequence = [];
 const undone = [];
 
-const blueTeamButton = document.querySelector('.blue-team-btn');
-const redTeamButton = document.querySelector('.red-team-btn');
+const scoreButtons = document.querySelectorAll('.score-btn');
 
 const resetScoreBtn = document.querySelector('.reset-score-btn');
 
-const blueProgressBar = document.querySelector('.blue-team-progress-bar .progress-bar-fill');
-const redProgressBar = document.querySelector('.red-team-progress-bar .progress-bar-fill');
+const blueProgressBar = document.querySelector('[data-id="1"].team-progress-bar .progress-bar-fill');
+const redProgressBar = document.querySelector('[data-id="2"].team-progress-bar .progress-bar-fill');
 
 let targetScore = Number(document.querySelector('.target-score-input').value);
 
-blueTeamButton.addEventListener('click', (e) => {
-  pointSequence.push(e.target.dataset.id);
-  const newScore = Number(e.target.innerHTML) + 1;
-  e.target.innerHTML = newScore;
-  renderServeIcon();
-  renderTeamProgressBar(blueProgressBar, newScore);
-  renderPointSequence();
-  isWin(e.target.dataset.id);
-});
-
-redTeamButton.addEventListener('click', (e) => {
-  pointSequence.push(e.target.dataset.id);
-  const newScore = Number(e.target.innerHTML) + 1;
-  e.target.innerHTML = newScore;
-  renderServeIcon();
-  renderTeamProgressBar(redProgressBar, newScore);
-  renderPointSequence();
-  isWin(e.target.dataset.id);
+scoreButtons.forEach(button => {
+  button.addEventListener('click', e => {
+    pointSequence.push(e.target.dataset.id);
+    const newScore = Number(e.target.innerHTML) + 1;
+    e.target.innerHTML = newScore;
+    renderServeIcon();
+    renderTeamProgressBar(e.target.dataset.id, newScore);
+    renderPointSequence();
+    isWin(e.target.dataset.id);
+  });
 });
 
 resetScoreBtn.addEventListener('click', () => {
@@ -50,15 +41,8 @@ document.querySelector('.undo-button').addEventListener('click', () => {
     renderPointSequence();
     renderServeIcon();
 
-    if (teamId == 1) {
-      blueTeamButton.innerHTML = newScore;
-      renderTeamProgressBar(blueProgressBar, newScore);
-    } else {
-      redTeamButton.innerHTML = newScore;
-      renderTeamProgressBar(redProgressBar, newScore);
-    }
-  } else {
-    console.log('No points to undo.')
+    document.querySelector(`[data-id="${teamId}"].score-btn`).innerHTML = newScore;
+    renderTeamProgressBar(teamId, newScore);
   }
 });
 
@@ -70,15 +54,8 @@ document.querySelector('.redo-button').addEventListener('click', () => {
     renderPointSequence();
     renderServeIcon();
 
-    if (teamId == 1) {
-      blueTeamButton.innerHTML = newScore;
-      renderTeamProgressBar(blueProgressBar, newScore);
-    } else {
-      redTeamButton.innerHTML = newScore;
-      renderTeamProgressBar(redProgressBar, newScore);
-    }
-  } else {
-    console.log('No points to redo.')
+    document.querySelector(`[data-id="${teamId}"].score-btn`).innerHTML = newScore;
+    renderTeamProgressBar(teamId, newScore);
   }
 });
 
@@ -91,7 +68,8 @@ function getTeamPointsProgress(points) {
   return Math.round(points / targetScore * 100);
 }
 
-function renderTeamProgressBar(progressBarElem, points) {
+function renderTeamProgressBar(teamId, points) {
+  const progressBarElem = document.querySelector(`[data-id="${teamId}"].team-controls .progress-bar-fill`);
   progressBarElem.style.width = `${getTeamPointsProgress(points)}%`;
 }
 
