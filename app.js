@@ -23,12 +23,13 @@ scoreButtons.forEach(button => {
 });
 
 resetScoreBtn.addEventListener('click', () => {
-  blueTeamButton.innerHTML = 0;
-  redTeamButton.innerHTML = 0;
+  scoreButtons.forEach(button => {
+    button.innerHTML = 0;
+  });
   pointSequence.length = 0;     // clear score sequence for new game
   targetScore = document.querySelector('.target-score-input').value;
-  renderTeamProgressBar(blueProgressBar, 0);
-  renderTeamProgressBar(redProgressBar, 0);
+  renderTeamProgressBar(1, 0);
+  renderTeamProgressBar(2, 0);
   renderPointSequence();
   renderServeIcon();
 });
